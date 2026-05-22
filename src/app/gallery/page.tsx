@@ -1,12 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { supabase } from "@/lib/supabase"; // Ensure your Supabase client is imported
+import { supabase } from "@/lib/supabase"; 
 
-// Supabase Data Type
 type GalleryImage = {
   id: number;
   image_url: string;
@@ -24,12 +22,6 @@ export default function Gallery() {
 
   // Lightbox State
   const [lightbox, setLightbox] = useState<{ src: string; desc: string } | null>(null);
-
-  // MOCK AUTH STATE (Set to 'admin' to see the Upload/Delete buttons)
-  const [mockUser] = useState<{ username: string; role: string } | null>({
-    username: "AdminUser",
-    role: "admin",
-  });
 
   // Fetch from Supabase
   useEffect(() => {
@@ -87,7 +79,7 @@ export default function Gallery() {
       window.removeEventListener("scroll", handleScroll);
       obs.disconnect();
     };
-  }, [images]); // Re-run observer when images load
+  }, [images]); 
 
   // Lock body scroll when Lightbox is open
   useEffect(() => {
@@ -107,14 +99,6 @@ export default function Gallery() {
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  const handleDelete = async (id: number, e: React.MouseEvent) => {
-    e.stopPropagation(); // Prevent opening lightbox
-    if (window.confirm("Delete this image? This cannot be undone.")) {
-      console.log(`Deleting image ${id} from Supabase...`);
-      // Add your Supabase delete logic here
-    }
   };
 
   return (
@@ -144,22 +128,6 @@ export default function Gallery() {
               {images.length} image{images.length !== 1 ? "s" : ""}
             </span>
           </div>
-
-          {mockUser?.role === "admin" && (
-            <Link href="/admin/gallery-upload" className="btn-upload">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                <path
-                  d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  fill="none"
-                />
-              </svg>
-              Upload Image
-            </Link>
-          )}
         </div>
 
         {/* Grid */}
@@ -170,7 +138,7 @@ export default function Gallery() {
         ) : images.length > 0 ? (
           <div className="gallery-grid">
             {images.map((img, index) => {
-              const delay = Math.round((index % 10) * 0.07 * 100) / 100; // Stagger animation
+              const delay = Math.round((index % 10) * 0.07 * 100) / 100;
 
               return (
                 <div
@@ -192,17 +160,6 @@ export default function Gallery() {
                   <div className="gallery-card-overlay">
                     {img.description && (
                       <p className="gallery-card-desc">{img.description}</p>
-                    )}
-
-                    {mockUser?.role === "admin" && (
-                      <div className="gallery-card-actions">
-                        <button className="btn-delete-img" onClick={(e) => handleDelete(img.id, e)}>
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z" />
-                          </svg>
-                          Delete
-                        </button>
-                      </div>
                     )}
                   </div>
                 </div>
