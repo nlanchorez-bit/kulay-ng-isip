@@ -13,6 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://kulayngisip.arterionph.com"),
   title: "Kulay ng Isip",
   description: "A 3D adventure-based educational PC game by TechTytes Studios that teaches children about Color Theory in Arts.",
 
@@ -24,7 +25,7 @@ export const metadata: Metadata = {
     siteName: "Kulay ng Isip",
     images: [
       {
-        url: "https://kulayngisip.arterionph.com/social-preview.png", // Must be an absolute URL!
+        url: "/social-preview.png", // Must be an absolute URL!
         width: 1200,
         height: 630,
         alt: "Kulay ng Isip Game Banner",
