@@ -49,7 +49,7 @@ export default function DeveloperBlog() {
         <div className="blog-public-hero-content">
           <span className="hero-eyebrow">Studio Updates</span>
           <h1>Developer Blog</h1>
-          <p>Read the latest patch notes, feature deep-dives, and behind-the-scenes stories directly from the Arterion Dev Team.</p>
+          <p>Read the latest patch notes, feature deep-dives, and behind-the-scenes stories directly from the TechTytes Game Studios Dev Team.</p>
         </div>
       </section>
 
