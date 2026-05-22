@@ -7,6 +7,7 @@
   --indigo: #6366f1;
   --yellow: #facc15;
   --dark:   #1a1a2e;
+  --darker: #13132a;
   --red-tint:   rgba(239,68,68,0.28);
   --green-tint: rgba(34,197,94,0.28);
   --blue-tint:  rgba(59,130,246,0.28);
@@ -3435,3 +3436,216 @@ body {
 }
 .share-copy:hover { background: #e2e8f0; color: #0f172a; transform: translateY(-2px); }
 .share-copy.copied { background: #dcfce7; color: #166534; }
+
+/* ===================================================
+   PLAY / DOWNLOAD PAGE CSS
+   =================================================== */
+
+.play-wrapper {
+  background: var(--darker);
+  min-height: 100vh;
+  color: #fff;
+}
+
+.play-hero {
+  background: linear-gradient(to bottom, rgba(19, 19, 42, 0.2), var(--darker)),
+              url('https://i.pinimg.com/1200x/73/c9/4c/73c94c0671a95647d7ecf726a0ac6ad9.jpg') center/cover;
+  padding: 8rem 1.5rem 4rem;
+  text-align: center;
+}
+
+.play-hero-content h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  color: #fff;
+  text-shadow: 2px 4px 10px rgba(0,0,0,0.5);
+  margin-bottom: 0.5rem;
+  animation: fadeUp 0.6s ease both;
+}
+
+.play-hero-content p {
+  color: #cbd5e1;
+  font-size: 1.15rem;
+  animation: fadeUp 0.6s ease 0.1s both;
+}
+
+.play-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 6rem;
+}
+
+/* Download Action Card */
+.download-card {
+  background: linear-gradient(135deg, rgba(249, 115, 22, 0.15), rgba(236, 72, 153, 0.15));
+  border: 1px solid rgba(249, 115, 22, 0.3);
+  border-radius: 1.25rem;
+  padding: 2.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  animation: fadeUp 0.6s ease 0.2s both;
+}
+
+.download-info h2 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2rem;
+  margin-bottom: 0.25rem;
+}
+
+.build-version {
+  color: #cbd5e1;
+  font-size: 1.05rem;
+}
+
+.build-version strong {
+  color: var(--yellow);
+}
+
+.btn-download-game {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: linear-gradient(90deg, var(--orange), var(--pink));
+  color: #fff;
+  padding: 1.25rem 2.5rem;
+  border-radius: 1rem;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.25rem;
+  text-decoration: none;
+  box-shadow: 0 6px 20px rgba(236, 72, 153, 0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn-download-game:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(236, 72, 153, 0.5);
+}
+
+.btn-download-game.disabled {
+  background: #334155;
+  box-shadow: none;
+  color: #94a3b8;
+  cursor: not-allowed;
+}
+
+.dl-icon {
+  font-size: 1.5rem;
+}
+
+/* Info Grid */
+.play-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 2rem;
+  animation: fadeUp 0.6s ease 0.3s both;
+}
+
+.play-card {
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 1.25rem;
+  padding: 2rem;
+}
+
+.play-card h3 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.4rem;
+  color: var(--yellow);
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #334155;
+  padding-bottom: 0.75rem;
+}
+
+/* Steps */
+.install-steps {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: step-counter;
+}
+
+.install-steps li {
+  position: relative;
+  padding-left: 3rem;
+  margin-bottom: 1.5rem;
+}
+
+.install-steps li::before {
+  counter-increment: step-counter;
+  content: counter(step-counter);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 2rem;
+  height: 2rem;
+  background: rgba(255,255,255,0.1);
+  color: var(--orange);
+  font-family: 'Fredoka One', cursive;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.install-steps li strong {
+  display: block;
+  font-size: 1.1rem;
+  color: #fff;
+  margin-bottom: 0.25rem;
+}
+
+.install-steps li p {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.install-steps code {
+  background: rgba(0,0,0,0.3);
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.25rem;
+  color: var(--pink);
+  font-family: monospace;
+}
+
+/* Requirements */
+.req-block {
+  margin-bottom: 2rem;
+}
+
+.req-block h4 {
+  color: #fff;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.req-block ul {
+  list-style: none;
+  padding: 0;
+}
+
+.req-block ul li {
+  color: #94a3b8;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+.req-block ul li strong {
+  color: #cbd5e1;
+  display: inline-block;
+  width: 90px;
+}
+
+.req-block.recommended h4 {
+  color: var(--orange);
+}
+
+@media (max-width: 768px) {
+  .play-grid { grid-template-columns: 1fr; }
+  .download-card { flex-direction: column; text-align: center; }
+}
