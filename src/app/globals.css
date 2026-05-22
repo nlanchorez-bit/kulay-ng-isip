@@ -3649,3 +3649,557 @@ body {
   .play-grid { grid-template-columns: 1fr; }
   .download-card { flex-direction: column; text-align: center; }
 }
+
+/* ===================================================
+   ABOUT PAGE -> TEAM CTA SECTION
+   =================================================== */
+
+.about-team-cta {
+  padding: 6rem 1.5rem;
+  background: var(--darker); /* Matches the dark theme of your game overview */
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.team-cta-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.team-cta-content .eyebrow {
+  display: block;
+  color: var(--pink);
+  font-weight: 800;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.team-cta-content h2 {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.team-cta-content p {
+  color: #cbd5e1;
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+.team-cta-content strong {
+  color: #fff;
+}
+
+.btn-team-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  padding: 0.85rem 1.75rem;
+  border-radius: 999px;
+  font-family: 'Fredoka One', cursive;
+  text-decoration: none;
+  font-size: 1.05rem;
+  transition: all 0.3s ease;
+}
+
+.btn-team-link .arrow {
+  transition: transform 0.3s ease;
+}
+
+.btn-team-link:hover {
+  background: var(--indigo);
+  border-color: var(--indigo);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(99, 102, 241, 0.4);
+}
+
+.btn-team-link:hover .arrow {
+  transform: translateX(4px);
+}
+
+/* Visual Side */
+.team-cta-visual {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.team-visual-bg {
+  position: absolute;
+  inset: 10%;
+  background: linear-gradient(135deg, var(--orange), var(--pink));
+  border-radius: 2rem;
+  transform: rotate(-6deg);
+  opacity: 0.8;
+  transition: transform 0.5s ease;
+}
+
+.about-team-cta:hover .team-visual-bg {
+  transform: rotate(0deg) scale(1.05);
+}
+
+.team-visual-img {
+  position: relative;
+  z-index: 2;
+  width: 85%;
+  height: 85%;
+  object-fit: cover;
+  border-radius: 1.5rem;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  transform: translateY(0);
+  transition: transform 0.5s ease;
+}
+
+.about-team-cta:hover .team-visual-img {
+  transform: translateY(-10px);
+}
+
+@media (max-width: 768px) {
+  .team-cta-inner {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    text-align: center;
+  }
+  
+  .team-cta-content .eyebrow {
+    margin-bottom: 0.5rem;
+  }
+  
+  .team-cta-visual {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}
+
+/* ===================================================
+   ABOUT & TEAM PAGE CSS
+   =================================================== */
+
+.about-wrapper {
+  background-color: #f8fafc;
+  min-height: 100vh;
+  font-family: 'Nunito', sans-serif;
+  color: #0f172a;
+}
+
+
+.about-hero-pattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.08;
+  background-image: radial-gradient(#ffffff 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.about-hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  margin: 0 auto;
+  animation: fadeUp 0.8s ease both;
+}
+
+.about-eyebrow {
+  display: inline-block;
+  color: var(--pink);
+  font-weight: 800;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.about-hero h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  color: #ffffff;
+  line-height: 1.1;
+  margin-bottom: 1.25rem;
+  text-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.about-hero p {
+  font-size: 1.2rem;
+  color: #cbd5e1;
+  line-height: 1.6;
+}
+
+/* ── MISSION STATEMENT ────────────────────────────── */
+.about-mission {
+  padding: 5rem 1.5rem;
+  background: #fff;
+  text-align: center;
+}
+
+.mission-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.mission-container h2 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2.2rem;
+  color: var(--dark);
+  margin-bottom: 1rem;
+}
+
+.mission-divider {
+  width: 60px;
+  height: 4px;
+  background: var(--orange);
+  border-radius: 4px;
+  margin: 0 auto 2rem;
+}
+
+.mission-container p {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: #475569;
+}
+
+/* ── SPLIT TEAM LAYOUT ────────────────────────────── */
+.team-split-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr; /* Left column takes 1 part, right takes 1.6 parts */
+  gap: 4rem;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 6rem 1.5rem 8rem;
+  align-items: start; /* Required for sticky to work correctly */
+}
+
+/* Left Side (Sticky Info) */
+.team-split-left {
+  position: sticky;
+  top: 8rem; /* Sticks to the top of the viewport minus header space */
+  padding-right: 2rem;
+}
+
+.team-split-left h2 {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  line-height: 1.1;
+  color: #0f172a;
+  margin-bottom: 1.5rem;
+}
+
+.team-split-left p {
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: #475569;
+}
+
+/* Right Side (Card Grid) */
+.team-grid-2x2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Forces exactly 2 cards per row */
+  gap: 2rem;
+}
+
+.team-card {
+  background: #ffffff;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.team-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.12);
+}
+
+.team-card-image {
+  position: relative;
+  width: 100%;
+  height: 400px; /* Slightly shorter to fit well in 2x2 */
+  overflow: hidden;
+  background: #e2e8f0;
+}
+
+.team-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  transition: transform 0.5s ease;
+}
+
+.team-card:hover .team-card-image img {
+  transform: scale(1.05);
+}
+
+.team-card-content {
+  padding: 1.75rem 1.5rem;
+  flex-grow: 1;
+}
+
+.team-role-badge {
+  display: inline-block;
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--indigo);
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
+}
+
+.team-name {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.35rem;
+  color: #0f172a;
+  margin-bottom: 0.5rem;
+}
+
+.team-desc {
+  color: #64748b;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 1024px) {
+  /* On tablets/smaller laptops, stack left and right */
+  .team-split-layout {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  
+  .team-split-left {
+    position: relative;
+    top: 0;
+    padding-right: 0;
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 640px) {
+  /* On mobile, stack the cards into a single column */
+  .team-grid-2x2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── CTA SECTION ──────────────────────────────────── */
+.about-cta {
+  background: linear-gradient(135deg, var(--orange), var(--pink));
+  padding: 6rem 1.5rem;
+  text-align: center;
+  color: #fff;
+}
+
+.about-cta h2 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2.2rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.about-cta p {
+  font-size: 1.1rem;
+  margin-bottom: 2.5rem;
+  opacity: 0.9;
+}
+
+.about-cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.about-cta-buttons .btn-primary {
+  background: #fff;
+  color: var(--orange);
+  padding: 1rem 2rem;
+  border-radius: 999px;
+  font-family: 'Fredoka One', cursive;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.about-cta-buttons .btn-primary:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+}
+
+.about-cta-buttons .btn-secondary {
+  background: rgba(0,0,0,0.2);
+  color: #fff;
+  padding: 1rem 2rem;
+  border-radius: 999px;
+  font-family: 'Fredoka One', cursive;
+  text-decoration: none;
+  transition: background 0.2s;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+
+.about-cta-buttons .btn-secondary:hover {
+  background: rgba(0,0,0,0.3);
+}
+
+/* ── PREMIUM STUDIO HERO ──────────────────────────── */
+.studio-hero {
+  position: relative;
+  background-color: var(--darker);
+  padding: 10rem 1.5rem 8rem;
+  text-align: center;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+}
+
+/* Background Animations & Grids */
+.studio-hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.hero-grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  transform: perspective(500px) rotateX(60deg) translateY(-100px) translateZ(-200px);
+  animation: gridMove 20s linear infinite;
+  mask-image: linear-gradient(to top, transparent, black 40%, black 70%, transparent);
+  -webkit-mask-image: linear-gradient(to top, transparent, black 40%, black 70%, transparent);
+}
+
+@keyframes gridMove {
+  0% { transform: perspective(500px) rotateX(60deg) translateY(0) translateZ(-200px); }
+  100% { transform: perspective(500px) rotateX(60deg) translateY(40px) translateZ(-200px); }
+}
+
+/* Glowing Ambient Orbs */
+.hero-glow {
+  position: absolute;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.15;
+  animation: floatOrb 10s ease-in-out infinite alternate;
+}
+
+.glow-orange {
+  background: var(--orange);
+  top: -200px;
+  left: -100px;
+}
+
+.glow-indigo {
+  background: var(--indigo);
+  bottom: -200px;
+  right: -100px;
+  animation-delay: -5s;
+}
+
+@keyframes floatOrb {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(50px, 50px) scale(1.1); }
+}
+
+/* Content Layout */
+.studio-hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* High-Tech Studio Badge */
+.studio-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 1.25rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  margin-bottom: 2rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--pink);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--pink), 0 0 20px var(--pink);
+  animation: pulseLight 2s infinite;
+}
+
+@keyframes pulseLight {
+  0% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+/* Typography Enhancements */
+.studio-hero-content h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(3rem, 7vw, 5.5rem); /* Scaled up significantly */
+  color: #ffffff;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  letter-spacing: -0.02em;
+}
+
+.studio-hero-content p {
+  font-size: 1.25rem;
+  color: #94a3b8;
+  line-height: 1.8;
+  max-width: 650px;
+}
+
+/* Bottom Fade to blend into the split layout */
+.studio-hero-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 150px;
+  background: linear-gradient(to top, var(--darker) 0%, transparent 100%);
+  z-index: 1;
+}

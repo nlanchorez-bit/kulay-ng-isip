@@ -163,16 +163,32 @@ export default function AdminInstallerManager() {
           <input type="text" name="version" required value={formData.version} onChange={handleChange} placeholder="e.g. Beta v2.1.0" />
         </div>
 
-        {/* Drag and Drop Zone for Windows Build */}
+        {/* Windows Build Upload OR External Link */}
         <div className="form-group">
           <label>Windows Build (.exe or .zip)</label>
           
+          {/* External Link Input */}
+          <input 
+            type="url" 
+            name="windows_url" 
+            value={formData.windows_url} 
+            onChange={handleChange} 
+            placeholder="Paste external link (e.g., Google Drive, Itch.io) OR upload below" 
+            style={{ marginBottom: "1rem" }}
+          />
+
+          <div className="admin-divider">
+            <span style={{ color: "#64748b", fontSize: "0.85rem", textTransform: "uppercase", fontWeight: 700 }}>— OR —</span>
+          </div>
+          
+          {/* Drag and Drop Zone (For files < 50MB) */}
           <div 
             className={`admin-dropzone ${isDragging ? 'drag-active' : ''}`}
             onDragOver={onDragOver}
             onDragLeave={onDragLeave}
             onDrop={onDrop}
             onClick={() => fileInputRef.current?.click()}
+            style={{ marginTop: "1rem" }}
           >
             <input 
               type="file" 
@@ -191,7 +207,7 @@ export default function AdminInstallerManager() {
               ) : (
                 <div>
                   <strong>Click to upload</strong> or drag and drop<br/>
-                  <span style={{ fontSize: "0.85rem", color: "#64748b" }}>Accepts .exe or .zip files</span>
+                  <span style={{ fontSize: "0.85rem", color: "#64748b" }}>Max file size: 50MB (Supabase Free Tier)</span>
                 </div>
               )}
             </div>

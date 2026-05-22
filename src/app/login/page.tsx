@@ -9,7 +9,6 @@ import { supabase } from "@/lib/supabase";
 export default function Login() {
   const router = useRouter();
   
-  // Toggle between login and forgot password views
   const [view, setView] = useState<"login" | "forgot">("login");
 
   const [email, setEmail] = useState("");
@@ -17,6 +16,11 @@ export default function Login() {
   const [error, setError] = useState("");
   const [successMsg, setSuccessMsg] = useState("");
   const [loading, setLoading] = useState(false);
+
+  // OWASP Best Practice: Basic client-side input validation
+  const isValidEmail = (email: string) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
 
   // --- 1. HANDLE LOGIN ---
   const handleLogin = async (e: React.FormEvent) => {
@@ -26,33 +30,40 @@ export default function Login() {
 
     const formattedEmail = email.trim().toLowerCase();
 
-    // Whitelist Check
-    const { data: whitelistData, error: whitelistError } = await supabase
-      .from("admin_whitelist")
-      .select("email")
-      .eq("email", formattedEmail)
-      .single();
-
-    if (whitelistError || !whitelistData) {
-      setError("Unauthorized access. This portal is for Game Masters only.");
+    if (!isValidEmail(formattedEmail)) {
+      setError("Please enter a valid email format.");
       setLoading(false);
       return;
     }
 
-    // Supabase Auth
     try {
+      // 1. Whitelist Check
+      const { data: whitelistData, error: whitelistError } = await supabase
+        .from("admin_whitelist")
+        .select("email")
+        .eq("email", formattedEmail)
+        .single();
+
+      // OWASP: Generic Error Message (Do not reveal if the whitelist check failed or the password failed)
+      if (whitelistError || !whitelistData) {
+        throw new Error("Invalid credentials or unauthorized access.");
+      }
+
+      // 2. Supabase Auth
       const { data, error: authError } = await supabase.auth.signInWithPassword({
         email: formattedEmail,
         password: password,
       });
 
-      if (authError) throw authError;
+      if (authError) throw new Error("Invalid credentials or unauthorized access.");
 
       if (data.session) {
         router.push("/admin");
       }
     } catch (err: any) {
-      setError(err.message || "Failed to authenticate.");
+      setError(err.message);
+      // OWASP: Always clear the password field from memory after a failed attempt
+      setPassword(""); 
     } finally {
       setLoading(false);
     }
@@ -67,34 +78,34 @@ export default function Login() {
 
     const formattedEmail = email.trim().toLowerCase();
 
-    // Whitelist Check (Don't send emails to non-admins!)
-    const { data: whitelistData, error: whitelistError } = await supabase
-      .from("admin_whitelist")
-      .select("email")
-      .eq("email", formattedEmail)
-      .single();
-
-    if (whitelistError || !whitelistData) {
-      setError("Email not found in the Game Master whitelist.");
+    if (!isValidEmail(formattedEmail)) {
+      setError("Please enter a valid email format.");
       setLoading(false);
       return;
     }
 
-    // Send Reset Email via Supabase
+    // OWASP Anti-Enumeration: Always show a success message immediately, 
+    // regardless of whether the email is actually in your database.
+    setSuccessMsg("If your email is authorized, a recovery link has been sent to your inbox.");
+    setEmail(""); 
+    setLoading(false);
+
+    // Perform the actual checks silently in the background
     try {
-      const { error: resetError } = await supabase.auth.resetPasswordForEmail(formattedEmail, {
-        // This tells Supabase where to send the user after they click the email link
-        redirectTo: `${window.location.origin}/update-password`,
-      });
+      const { data: whitelistData } = await supabase
+        .from("admin_whitelist")
+        .select("email")
+        .eq("email", formattedEmail)
+        .single();
 
-      if (resetError) throw resetError;
-
-      setSuccessMsg("Recovery email sent! Check your inbox for the reset link.");
-      setEmail(""); // Clear input
-    } catch (err: any) {
-      setError(err.message || "Failed to send reset email.");
-    } finally {
-      setLoading(false);
+      if (whitelistData) {
+        await supabase.auth.resetPasswordForEmail(formattedEmail, {
+          redirectTo: `${window.location.origin}/update-password`,
+        });
+      }
+    } catch (err) {
+      // Fail silently to prevent leaking information to attackers
+      console.error("Background reset task failed.");
     }
   };
 
@@ -118,7 +129,7 @@ export default function Login() {
 
             {error && <div className="error-msg">{error}</div>}
             {successMsg && (
-              <div style={{ background: "rgba(34,197,94,0.15)", border: "1px solid rgba(34,197,94,0.4)", color: "#86efac", padding: "1rem", borderRadius: "0.75rem", marginBottom: "1.5rem", textAlign: "center", fontWeight: 700 }}>
+              <div style={{ background: "rgba(34,197,94,0.15)", border: "1px solid rgba(34,197,94,0.4)", color: "#86efac", padding: "1rem", borderRadius: "0.75rem", marginBottom: "1.5rem", textAlign: "center", fontWeight: 700, lineHeight: 1.5 }}>
                 {successMsg}
               </div>
             )}
@@ -135,7 +146,7 @@ export default function Login() {
                 </div>
 
                 <div style={{ textAlign: "right", marginBottom: "1rem" }}>
-                  <button type="button" onClick={() => { setView("forgot"); setError(""); setSuccessMsg(""); }} style={{ background: "none", border: "none", color: "var(--yellow)", cursor: "pointer", fontWeight: 700 }}>
+                  <button type="button" onClick={() => { setView("forgot"); setError(""); setSuccessMsg(""); setPassword(""); }} style={{ background: "none", border: "none", color: "var(--yellow)", cursor: "pointer", fontWeight: 700 }}>
                     Forgot Password?
                   </button>
                 </div>
@@ -149,7 +160,7 @@ export default function Login() {
             {/* FORGOT PASSWORD VIEW */}
             {view === "forgot" && (
               <form onSubmit={handleForgotPassword}>
-                <p style={{ color: "rgba(255,255,255,0.8)", marginBottom: "1.5rem", fontSize: "0.95rem", textAlign: "center" }}>
+                <p style={{ color: "rgba(255,255,255,0.8)", marginBottom: "1.5rem", fontSize: "0.95rem", textAlign: "center", lineHeight: 1.6 }}>
                   Enter your whitelisted email address and we will send you a secure link to reset your password.
                 </p>
                 

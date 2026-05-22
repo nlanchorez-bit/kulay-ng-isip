@@ -8,19 +8,22 @@ import { supabase } from "@/lib/supabase";
 export default function PlayPage() {
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
   const [version, setVersion] = useState<string>("");
+  const [releaseNotes, setReleaseNotes] = useState<string>("");
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchInstaller() {
+      // 1. Added release_notes to the select query
       const { data, error } = await supabase
         .from("game_installer")
-        .select("windows_url, version")
+        .select("windows_url, version, release_notes")
         .eq("id", 1)
         .single();
 
       if (!error && data) {
         setDownloadUrl(data.windows_url);
         setVersion(data.version);
+        setReleaseNotes(data.release_notes || "No patch notes provided for this build.");
       }
       setLoading(false);
     }
@@ -58,6 +61,21 @@ export default function PlayPage() {
             )}
           </div>
         </div>
+
+        {/* 2. New Patch Notes Section */}
+        {!loading && (
+          <div className="play-card" style={{ marginBottom: "2rem", animation: "fadeUp 0.6s ease 0.25s both" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", borderBottom: "1px solid #334155", paddingBottom: "0.75rem", marginBottom: "1.5rem" }}>
+              <h3 style={{ margin: 0, borderBottom: "none", paddingBottom: 0 }}>Patch Notes</h3>
+              <span className="badge-dev" style={{ background: "rgba(249, 115, 22, 0.1)", color: "var(--orange)", padding: "0.25rem 0.75rem", borderRadius: "999px", fontSize: "0.75rem", fontWeight: 800, textTransform: "uppercase" }}>
+                {version}
+              </span>
+            </div>
+            <div style={{ whiteSpace: "pre-wrap", color: "#cbd5e1", fontSize: "1.05rem", lineHeight: 1.7 }}>
+              {releaseNotes}
+            </div>
+          </div>
+        )}
 
         <div className="play-grid">
           {/* Installation Instructions */}

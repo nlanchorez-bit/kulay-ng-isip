@@ -137,6 +137,27 @@ export default function About() {
 
         </div>
       </section>
+{/* ══════════════ MEET THE TEAM CTA ══════════════ */}
+      <section className="about-team-cta reveal">
+        <div className="team-cta-inner">
+          <div className="team-cta-content">
+            <span className="eyebrow">The Studio</span>
+            <h2>Meet the <span className="gradient-text">Developers</span></h2>
+            <p>
+              Discover the passionate team of developers at 
+              <strong> TechTytes Game Studios</strong> working hard to bring Kulay ng Isip to life.
+            </p>
+            <Link href="/team" className="btn-team-link">
+              Get to know us <span className="arrow">→</span>
+            </Link>
+          </div>
+          <div className="team-cta-visual">
+            {/* A decorative overlapping layout to make it look premium */}
+            <div className="team-visual-bg"></div>
+            <img src="https://i.imghippo.com/files/HDHU5101tbg.png" alt="Arterion Development Team" className="team-visual-img" />
+          </div>
+        </div>
+      </section>
 
       {/* ══════════════ FAQ ══════════════ */}
       <section className="faq">
