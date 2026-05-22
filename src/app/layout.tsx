@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     siteName: "Kulay ng Isip",
     images: [
       {
-        url: "https://kulayngisip.arterionph.com/social-preview.jpg", // Must be an absolute URL!
+        url: "https://kulayngisip.arterionph.com/social-preview.png", // Must be an absolute URL!
         width: 1200,
         height: 630,
         alt: "Kulay ng Isip Game Banner",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Kulay ng Isip | Bring Color Back",
     description: "Explore a magical world that has lost its colors in this 3D educational adventure game.",
-    images: ["https://kulayngisip.arterionph.com/social-preview.jpg"], // Must be an absolute URL!
+    images: ["https://kulayngisip.arterionph.com/social-preview.png"], // Must be an absolute URL!
   },
 };
 
