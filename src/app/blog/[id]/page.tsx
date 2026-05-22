@@ -68,7 +68,7 @@ export default async function BlogPost({ params }: { params: Promise<{ id: strin
               <span className="avatar-icon">A</span>
             </div>
             <div className="meta-text">
-              <span className="author-name">Arterion Dev Team</span>
+              <span className="author-name">TechTytes Dev Team</span>
               <span className="publish-date">
                 {new Date(post.created_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
               </span>
