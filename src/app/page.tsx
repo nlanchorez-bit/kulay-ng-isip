@@ -78,7 +78,7 @@ export default function Home() {
             className="hero-title-img"
           />
           <img
-            src="https://i.imgur.com/UdoctDG.png"
+            src="https://i.imgur.com/BtZyQ9Q.png"
             alt="A 3D Adventure-based Educational PC Game"
             className="hero-sub-img"
           />
@@ -227,19 +227,19 @@ export default function Home() {
         <div className="media-inner">
           <div className="video-wrap reveal">
             <iframe
-              src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+              src="https://www.youtube.com/embed/P0zST6dPHgY?si=8UhB6Xp5ynN1muCN"
               title="Kulay ng Isip Trailer"
               allowFullScreen
             />
           </div>
 
           <div className="screenshots">
-            <img src="https://i.imgur.com/L4GI5E9.png" alt="Screenshot 1" className="reveal" />
-            <img src="https://i.imgur.com/HfskiMY.png" alt="Screenshot 2" className="reveal" style={{ transitionDelay: ".08s" }} />
-            <img src="https://i.imgur.com/sMxZWnC.png" alt="Screenshot 3" className="reveal" style={{ transitionDelay: ".16s" }} />
-            <img src="https://i.imgur.com/4n4PCMs.png" alt="Screenshot 4" className="reveal" style={{ transitionDelay: ".24s" }} />
-            <img src="https://i.imgur.com/fj33d3c.png" alt="Screenshot 5" className="reveal" style={{ transitionDelay: ".32s" }} />
-            <img src="https://i.imgur.com/5nai4DI.png" alt="Screenshot 6" className="reveal" style={{ transitionDelay: ".40s" }} />
+            <img src="https://i.imgur.com/0AABy9S.png" alt="Screenshot 1" className="reveal" />
+            <img src="https://i.imgur.com/5RTyZyz.png" alt="Screenshot 2" className="reveal" style={{ transitionDelay: ".08s" }} />
+            <img src="https://i.imgur.com/BTs8f9E.png" alt="Screenshot 3" className="reveal" style={{ transitionDelay: ".16s" }} />
+            <img src="https://i.imgur.com/48YRKLq.png" alt="Screenshot 4" className="reveal" style={{ transitionDelay: ".24s" }} />
+            <img src="https://i.imgur.com/UBSnouG.png" alt="Screenshot 5" className="reveal" style={{ transitionDelay: ".32s" }} />
+            <img src="https://i.imgur.com/svKwXRT.png" alt="Screenshot 6" className="reveal" style={{ transitionDelay: ".40s" }} />
           </div>
 
           {/* WHY IT WORKS */}

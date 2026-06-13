@@ -117,20 +117,20 @@ export default function About() {
           {/* Stage cards */}
           <div className="stages">
             <div className="stage-card reveal" style={{ transitionDelay: ".2s" }}>
-              <img src="https://i.imgur.com/uMAvd6X.jpeg" alt="Stage 1 Environment" />
-              <div className="stage-card-overlay" style={{ background: "var(--red-tint)" }} />
+              <img src="https://i.imgur.com/pL3Dczv.jpeg" alt="Stage 1 Environment" />
+              <div className="stage-card-overlay" style={{ background: "var(--green-tint)" }} />
               <div className="stage-card-label">Stage 1 Environment</div>
             </div>
 
             <div className="stage-card reveal" style={{ transitionDelay: ".3s" }}>
-              <img src="https://i.imgur.com/pL3Dczv.jpeg" alt="Stage 2 Environment" />
-              <div className="stage-card-overlay" style={{ background: "var(--green-tint)" }} />
+              <img src="https://i.imgur.com/T4ynOP4.jpeg" alt="Stage 2 Environment" />
+              <div className="stage-card-overlay" style={{ background: "var(--blue-tint)" }} />
               <div className="stage-card-label">Stage 2 Environment</div>
             </div>
 
             <div className="stage-card reveal" style={{ transitionDelay: ".4s" }}>
-              <img src="https://i.imgur.com/T4ynOP4.jpeg" alt="Stage 3 Environment" />
-              <div className="stage-card-overlay" style={{ background: "var(--blue-tint)" }} />
+              <img src="https://i.imgur.com/uMAvd6X.jpeg" alt="Stage 3 Environment" />
+              <div className="stage-card-overlay" style={{ background: "var(--red-tint)" }} />
               <div className="stage-card-label">Stage 3 Environment</div>
             </div>
           </div>

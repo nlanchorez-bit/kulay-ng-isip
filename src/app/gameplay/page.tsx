@@ -161,7 +161,7 @@ export default function Gameplay() {
 
         <div className="gp-stages-grid reveal" style={{ transitionDelay: ".1s" }}>
           <div className="gp-stage-item">
-            <img src="https://i.imgur.com/uMAvd6X.jpeg" alt="Stage 1" />
+            <img src="https://i.imgur.com/pL3Dczv.jpeg" alt="Stage 1" />
             <div className="gp-stage-item-overlay">
               <div className="gp-stage-number">01</div>
               <span className="gp-stage-tag tag-primary">Primary Colors</span>
@@ -171,7 +171,7 @@ export default function Gameplay() {
           </div>
 
           <div className="gp-stage-item">
-            <img src="https://i.imgur.com/pL3Dczv.jpeg" alt="Stage 2" />
+            <img src="https://i.imgur.com/T4ynOP4.jpeg" alt="Stage 2" />
             <div className="gp-stage-item-overlay">
               <div className="gp-stage-number">02</div>
               <span className="gp-stage-tag tag-secondary">Secondary Colors</span>
@@ -181,7 +181,7 @@ export default function Gameplay() {
           </div>
 
           <div className="gp-stage-item">
-            <img src="https://i.imgur.com/T4ynOP4.jpeg" alt="Stage 3" />
+            <img src="https://i.imgur.com/uMAvd6X.jpeg" alt="Stage 3" />
             <div className="gp-stage-item-overlay">
               <div className="gp-stage-number">03</div>
               <span className="gp-stage-tag tag-tertiary">Tertiary Colors</span>
