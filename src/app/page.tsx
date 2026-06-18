@@ -85,15 +85,23 @@ export default function Home() {
           
           {/* 3. Dynamic Play/Download Button */}
           {downloadUrl ? (
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem" }}>
-              <a 
-                href={downloadUrl} 
-                className="btn-play" 
-                target="_blank" 
-                rel="noopener noreferrer"
-              >
-                Download Game
-              </a>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem" }}>
+              <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", justifyContent: "center" }}>
+                <a 
+                  href={downloadUrl} 
+                  className="btn-play" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                >
+                  Download Windows PC
+                </a>
+                
+                {/* Link to the WebGL Play Route */}
+                <Link href="/play" className="btn-play" style={{ background: "var(--indigo)" }}>
+                  Play in Browser
+                </Link>
+              </div>
+
               {gameVersion && (
                 <span style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.7)", fontWeight: 700, letterSpacing: "0.05em" }}>
                   Latest Build: {gameVersion}
@@ -101,9 +109,14 @@ export default function Home() {
               )}
             </div>
           ) : (
-            <Link href="/gameplay" className="btn-play">
-              Explore Gameplay
-            </Link>
+            <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", justifyContent: "center" }}>
+              <Link href="/play" className="btn-play">
+                Play in Browser
+              </Link>
+              <Link href="/gameplay" className="btn-play" style={{ background: "var(--indigo)" }}>
+                Explore Gameplay
+              </Link>
+            </div>
           )}
 
         </div>

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { supabase } from "@/lib/supabase";
+import KulayNgIsipGame from "@/components/KulayNgIsipGame";
 
 export default function PlayPage() {
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
@@ -13,7 +14,6 @@ export default function PlayPage() {
 
   useEffect(() => {
     async function fetchInstaller() {
-      // 1. Added release_notes to the select query
       const { data, error } = await supabase
         .from("game_installer")
         .select("windows_url, version, release_notes")
@@ -31,19 +31,99 @@ export default function PlayPage() {
   }, []);
 
   return (
-    <main className="play-wrapper">
+    <main className="play-wrapper min-h-screen flex flex-col bg-gray-950">
       <Header />
 
       <section className="play-hero">
         <div className="play-hero-content">
           <h1>Ready to Restore the Colors?</h1>
-          <p>Download the latest build of Kulay ng Isip and start your adventure.</p>
+          <p>Play instantly in your browser or download the full PC build for the best experience.</p>
         </div>
       </section>
 
-      <div className="play-container">
+      <div className="play-container max-w-7xl mx-auto px-4 w-full">
         
-        {/* Download Section */}
+        {/* Browser Play Section */}
+        <div className="mb-12 w-full animate-fade-in">
+          <div className="flex items-center justify-between mb-4 px-2">
+            <h2 className="text-2xl font-bold text-white">Browser Edition</h2>
+            <span className="text-sm font-semibold text-indigo-400 bg-indigo-900/30 px-3 py-1 rounded-full border border-indigo-800/50">
+              Web Optimized
+            </span>
+          </div>
+          
+          <KulayNgIsipGame />
+
+          {/* NEW: Game Controls UI directly matching your image */}
+          <div className="play-card" style={{ marginTop: "2rem", background: "#1e293b", border: "1px solid #334155" }}>
+            <h3 style={{ borderBottom: "1px solid #334155", paddingBottom: "0.75rem", marginBottom: "1.5rem" }}>Game Controls</h3>
+            
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "3rem" }}>
+              
+              {/* Keyboard Column */}
+              <div>
+                <h4 style={{ color: "#94a3b8", marginBottom: "1.25rem", textTransform: "uppercase", fontSize: "0.85rem", letterSpacing: "0.05em" }}>Keyboard</h4>
+                <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "1rem" }}>
+                  <li style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <kbd style={{ background: "#0f172a", padding: "0.3rem 0.6rem", borderRadius: "6px", border: "1px solid #475569", fontFamily: "monospace", color: "#f8fafc", fontSize: "0.9rem" }}>Esc</kbd> 
+                    <span style={{ color: "#cbd5e1" }}>Pause</span>
+                  </li>
+                  <li style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <kbd style={{ background: "#0f172a", padding: "0.3rem 0.6rem", borderRadius: "6px", border: "1px solid #475569", fontFamily: "monospace", color: "#f8fafc", fontSize: "0.9rem" }}>WASD</kbd> 
+                    <span style={{ color: "#cbd5e1" }}>Movement</span>
+                  </li>
+                  <li style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <kbd style={{ background: "#0f172a", padding: "0.3rem 0.6rem", borderRadius: "6px", border: "1px solid #475569", fontFamily: "monospace", color: "#f8fafc", fontSize: "0.9rem" }}>1</kbd> 
+                    <span style={{ color: "#cbd5e1" }}>Primary Colors</span>
+                  </li>
+                  <li style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <kbd style={{ background: "#0f172a", padding: "0.3rem 0.6rem", borderRadius: "6px", border: "1px solid #475569", fontFamily: "monospace", color: "#f8fafc", fontSize: "0.9rem" }}>2</kbd> 
+                    <span style={{ color: "#cbd5e1" }}>Secondary Colors</span>
+                  </li>
+                  <li style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <kbd style={{ background: "#0f172a", padding: "0.3rem 0.6rem", borderRadius: "6px", border: "1px solid #475569", fontFamily: "monospace", color: "#f8fafc", fontSize: "0.9rem" }}>3</kbd> 
+                    <span style={{ color: "#cbd5e1" }}>Items</span>
+                  </li>
+                  <li style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <kbd style={{ background: "#0f172a", padding: "0.3rem 0.6rem", borderRadius: "6px", border: "1px solid #475569", fontFamily: "monospace", color: "#f8fafc", fontSize: "0.9rem" }}>F</kbd> 
+                    <span style={{ color: "#cbd5e1" }}>Interact</span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Mouse Column */}
+              <div>
+                <h4 style={{ color: "#94a3b8", marginBottom: "1.25rem", textTransform: "uppercase", fontSize: "0.85rem", letterSpacing: "0.05em" }}>Mouse</h4>
+                <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: "1rem" }}>
+                  <li style={{ display: "flex", alignItems: "center", gap: "1rem", background: "#0f172a", padding: "0.75rem", borderRadius: "8px", border: "1px solid #334155" }}>
+                    <div style={{ width: "20px", height: "20px", background: "#ef4444", borderRadius: "4px", flexShrink: 0, boxShadow: "0 0 10px rgba(239, 68, 68, 0.3)" }}></div>
+                    <div style={{ flex: 1, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                      <strong style={{ color: "#f8fafc", fontSize: "0.9rem" }}>Left Click</strong> 
+                      <span style={{ color: "#cbd5e1", fontSize: "0.9rem", textAlign: "right" }}>Use Color / Item</span>
+                    </div>
+                  </li>
+                  <li style={{ display: "flex", alignItems: "center", gap: "1rem", background: "#0f172a", padding: "0.75rem", borderRadius: "8px", border: "1px solid #334155" }}>
+                    <div style={{ width: "20px", height: "20px", background: "#22c55e", borderRadius: "4px", flexShrink: 0, boxShadow: "0 0 10px rgba(34, 197, 94, 0.3)" }}></div>
+                    <div style={{ flex: 1, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                      <strong style={{ color: "#f8fafc", fontSize: "0.9rem" }}>Scroll Wheel</strong> 
+                      <span style={{ color: "#cbd5e1", fontSize: "0.9rem", textAlign: "right" }}>Cycle Colors & Items</span>
+                    </div>
+                  </li>
+                  <li style={{ display: "flex", alignItems: "center", gap: "1rem", background: "#0f172a", padding: "0.75rem", borderRadius: "8px", border: "1px solid #334155" }}>
+                    <div style={{ width: "20px", height: "20px", background: "#3b82f6", borderRadius: "4px", flexShrink: 0, boxShadow: "0 0 10px rgba(59, 130, 246, 0.3)" }}></div>
+                    <div style={{ flex: 1, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                      <strong style={{ color: "#f8fafc", fontSize: "0.9rem" }}>Right Click</strong> 
+                      <span style={{ color: "#cbd5e1", fontSize: "0.9rem", textAlign: "right" }}>Shield</span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        {/* Existing Download Section */}
         <div className="download-card">
           <div className="download-info">
             <h2>Download for Windows</h2>
@@ -62,7 +142,7 @@ export default function PlayPage() {
           </div>
         </div>
 
-        {/* 2. New Patch Notes Section */}
+        {/* Patch Notes Section */}
         {!loading && (
           <div className="play-card" style={{ marginBottom: "2rem", animation: "fadeUp 0.6s ease 0.25s both" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", borderBottom: "1px solid #334155", paddingBottom: "0.75rem", marginBottom: "1.5rem" }}>
@@ -80,7 +160,7 @@ export default function PlayPage() {
         <div className="play-grid">
           {/* Installation Instructions */}
           <div className="play-card">
-            <h3>Installation Guide</h3>
+            <h3>Installation Guide (PC Build)</h3>
             <ol className="install-steps">
               <li>
                 <strong>Download the file</strong>
@@ -103,7 +183,7 @@ export default function PlayPage() {
 
           {/* System Requirements */}
           <div className="play-card">
-            <h3>System Requirements</h3>
+            <h3>System Requirements (PC Build)</h3>
             
             <div className="req-block">
               <h4>Minimum</h4>
