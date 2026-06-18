@@ -219,9 +219,9 @@ export default function About() {
       {/* ══════════════ CTA STRIP ══════════════ */}
       <section className="cta-strip reveal">
         <h2>Ready to Start Your Adventure?</h2>
-        <p>Join the community, share your discoveries, and bring color back to the world!</p>
-        <Link href="/forum" className="btn-cta">
-          Visit the Forum
+        <p>Play the game now through your browser or by downloading the game and bring color back to the world!</p>
+        <Link href="/play" className="btn-cta">
+          Play the Game
         </Link>
       </section>
 
