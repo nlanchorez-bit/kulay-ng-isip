@@ -4203,3 +4203,220 @@ body {
   background: linear-gradient(to top, var(--darker) 0%, transparent 100%);
   z-index: 1;
 }
+
+/* ===================================================
+   TESTIMONIALS (INFINITE DUAL MARQUEE)
+   =================================================== */
+
+.testimonials {
+  padding: 6rem 0 8rem;
+  position: relative;
+  overflow: hidden;
+  z-index: 5; 
+}
+
+.testimonials-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.marquee-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column; /* Stack the two tracks vertically */
+  gap: 2rem; /* The space between the top row and bottom row */
+  overflow: hidden;
+  user-select: none;
+  mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+}
+
+.marquee-track {
+  display: flex;
+  gap: 2rem; /* The space between individual cards */
+  padding-left: 2rem;
+  width: max-content;
+}
+
+/* Pause animations for both tracks when a user hovers to read */
+.marquee-track:hover {
+  animation-play-state: paused; 
+}
+
+/* Track Directives */
+.scroll-left {
+  animation: scrollMarqueeLeft 50s linear infinite;
+}
+
+.scroll-right {
+  animation: scrollMarqueeRight 50s linear infinite;
+}
+
+/* Keyframes */
+@keyframes scrollMarqueeLeft {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); } 
+}
+
+@keyframes scrollMarqueeRight {
+  0% { transform: translateX(-50%); } 
+  100% { transform: translateX(0); }
+}
+
+/* Individual Card Setup */
+.message-blob {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 1.5rem;
+  padding: 2rem;
+  width: 400px; /* Fixed width for uniformity */
+  flex-shrink: 0; /* Prevents cards from squishing together */
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: background 0.3s ease;
+}
+
+.message-blob:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.message-text {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #f1f5f9;
+  margin-bottom: 1.5rem;
+  font-style: italic;
+  white-space: normal; 
+}
+
+.message-author {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.author-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Fredoka One', cursive;
+  color: #fff;
+  font-size: 1.25rem;
+}
+
+.author-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.author-info strong {
+  color: #fff;
+  font-size: 1.05rem;
+}
+
+.author-info span {
+  color: #94a3b8;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .message-blob {
+    width: 320px;
+    padding: 1.5rem;
+  }
+}
+
+/* ===================================================
+   PARENTS & EDUCATORS HUB
+   =================================================== */
+
+.educators-hub {
+  padding: 6rem 1.5rem;
+  /* Subtle background glow behind the section */
+  background: linear-gradient(to bottom, transparent, rgba(99, 102, 241, 0.03) 50%, transparent);
+  position: relative;
+  z-index: 5;
+}
+
+.hub-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.hub-header {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 4rem;
+}
+
+.hub-header h2 {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(2.2rem, 5vw, 3rem);
+  margin-bottom: 1rem;
+  color: #f8fafc;
+}
+
+.hub-header p {
+  color: #94a3b8;
+  font-size: 1.15rem;
+  line-height: 1.7;
+}
+
+.hub-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.hub-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.5rem;
+  padding: 3rem 2rem;
+  text-align: center;
+  transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.hub-card:hover {
+  transform: translateY(-8px);
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(99, 102, 241, 0.3); /* Subtle Indigo border glow on hover */
+}
+
+.hub-icon {
+  font-size: 3rem;
+  margin: 0 auto 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+}
+
+.hub-card h3 {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.5rem;
+  color: #f8fafc;
+  margin-bottom: 1rem;
+}
+
+.hub-card p {
+  color: #cbd5e1;
+  font-size: 1.05rem;
+  line-height: 1.6;
+}

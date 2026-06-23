@@ -4,32 +4,48 @@ import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Header from "@/components/Header"; 
 import Footer from "@/components/Footer";
-import { supabase } from "@/lib/supabase"; // Import Supabase
+import { supabase } from "@/lib/supabase"; 
 import "./globals.css";
 
 export default function Home() {
   const heroRef = useRef<HTMLElement>(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
   
-  // 1. New State for the Game Installer
+  // Refs for the floating ambient blobs
+  const leftBlobRef = useRef<HTMLDivElement>(null);
+  const rightBlobRef = useRef<HTMLDivElement>(null);
+
+  // 1. State for the Game Installer & Testimonials
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
   const [gameVersion, setGameVersion] = useState<string | null>(null);
+  const [testimonials, setTestimonials] = useState<any[]>([]);
 
   useEffect(() => {
-    // 2. Fetch the live download link from your CMS
-    async function fetchLiveBuild() {
-      const { data, error } = await supabase
+    // 2. Fetch the live download link and dynamic testimonials from CMS
+    async function fetchData() {
+      // Fetch Installer
+      const { data: installerData, error: installerError } = await supabase
         .from("game_installer")
         .select("windows_url, version")
         .eq("id", 1)
         .single();
 
-      if (!error && data?.windows_url) {
-        setDownloadUrl(data.windows_url);
-        setGameVersion(data.version);
+      if (!installerError && installerData?.windows_url) {
+        setDownloadUrl(installerData.windows_url);
+        setGameVersion(installerData.version);
+      }
+
+      // Fetch Testimonials
+      const { data: testData, error: testError } = await supabase
+        .from("testimonials")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+      if (!testError && testData) {
+        setTestimonials(testData);
       }
     }
-    fetchLiveBuild();
+    fetchData();
 
     // Scroll reveal (Intersection Observer)
     const reveals = document.querySelectorAll(".reveal");
@@ -48,10 +64,22 @@ export default function Home() {
 
     // Scroll Listener (Parallax + Scroll To Top)
     const handleScroll = () => {
+      const scrollY = window.scrollY;
+
       if (heroRef.current) {
-        heroRef.current.style.backgroundPositionY = `${window.scrollY * 0.4}px`;
+        heroRef.current.style.backgroundPositionY = `${scrollY * 0.4}px`;
       }
-      setShowScrollTop(window.scrollY > 400);
+
+      // Move blobs down dynamically based on scroll depth
+      if (leftBlobRef.current) {
+        leftBlobRef.current.style.transform = `translateY(${scrollY * 0.15}px)`;
+      }
+      
+      if (rightBlobRef.current) {
+        rightBlobRef.current.style.transform = `translateY(${scrollY * 0.25}px)`;
+      }
+
+      setShowScrollTop(scrollY > 400);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -65,8 +93,19 @@ export default function Home() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  // Helper variables to split testimonials into two distinct rows
+  const midpoint = Math.ceil(testimonials.length / 2);
+  const topRowTestimonials = testimonials.slice(0, midpoint);
+  const bottomRowTestimonials = testimonials.slice(midpoint);
+
   return (
     <>
+      {/* The Ambient Background Blobs */}
+      <div className="ambient-background">
+        <div ref={leftBlobRef} className="ambient-blob blob-left"></div>
+        <div ref={rightBlobRef} className="ambient-blob blob-right"></div>
+      </div>
+
       <Header />
 
       {/* ══════════════ HERO ══════════════ */}
@@ -255,8 +294,8 @@ export default function Home() {
             <img src="https://i.imgur.com/svKwXRT.png" alt="Screenshot 6" className="reveal" style={{ transitionDelay: ".40s" }} />
           </div>
 
-          {/* WHY IT WORKS */}
-          <div className="why reveal">
+          {/* WHY IT WORKS (Padding reduced here to pull testimonials up) */}
+          <div className="why reveal" style={{ paddingBottom: "2rem" }}>
             <p className="eyebrow">Why It Works</p>
             <h2>
               Gamifying a<br />
@@ -281,6 +320,98 @@ export default function Home() {
               </svg>
               Download our Study
             </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════ TESTIMONIALS (DUAL MARQUEE) ══════════════ */}
+      {testimonials.length > 0 && (
+        <section className="testimonials">
+          <div className="testimonials-inner">
+            
+            {/* REMOVED the 'reveal' class so this title never gets stuck invisible */}
+            <div className="testimonials-header">
+              <p className="eyebrow" style={{ color: "var(--pink)" }}>Community Feedback</p>
+              <h2 style={{ fontSize: "2.5rem", fontFamily: "'Fredoka One', cursive", marginBottom: "1rem" }}>
+                Hear from the <span className="gradient-text">Players</span>
+              </h2>
+            </div>
+
+            <div className="marquee-wrapper">
+              
+              {/* TOP ROW: Moves Right */}
+              <div className="marquee-track scroll-right">
+                {[...topRowTestimonials, ...topRowTestimonials].map((t, i) => (
+                  <div key={`top-${t.id}-${i}`} className="message-blob">
+                    <p className="message-text">"{t.content}"</p>
+                    <div className="message-author">
+                      <div className="author-avatar" style={{ background: t.avatar_color }}>
+                        {t.author_name.charAt(0).toUpperCase()}
+                      </div>
+                      <div className="author-info">
+                        <strong>{t.author_name}</strong>
+                        <span>{t.author_role}</span>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* BOTTOM ROW: Moves Left (Only render if we have enough testimonials) */}
+              {bottomRowTestimonials.length > 0 && (
+                <div className="marquee-track scroll-left">
+                  {[...bottomRowTestimonials, ...bottomRowTestimonials].map((t, i) => (
+                    <div key={`bottom-${t.id}-${i}`} className="message-blob">
+                      <p className="message-text">"{t.content}"</p>
+                      <div className="message-author">
+                        <div className="author-avatar" style={{ background: t.avatar_color }}>
+                          {t.author_name.charAt(0).toUpperCase()}
+                        </div>
+                        <div className="author-info">
+                          <strong>{t.author_name}</strong>
+                          <span>{t.author_role}</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ══════════════ PARENTS & EDUCATORS HUB ══════════════ */}
+      <section className="educators-hub reveal">
+        <div className="hub-inner">
+          <div className="hub-header">
+            <p className="eyebrow" style={{ color: "var(--indigo)" }}>For Parents & Teachers</p>
+            <h2>Safe. Educational. <span className="gradient-text">Inspiring.</span></h2>
+            <p>Designed specifically for young learners aged 7 to 12, Kulay ng Isip provides a worry-free environment where foundational art concepts take center stage.</p>
+          </div>
+
+          <div className="hub-grid">
+            {/* Card 1: Safety */}
+            <div className="hub-card">
+              <div className="hub-icon">🛡️</div>
+              <h3>100% Kid-Safe</h3>
+              <p>No microtransactions, no hidden fees, and no online chat. Just a secure, single-player PC adventure that can be played entirely offline.</p>
+            </div>
+
+            {/* Card 2: Educational Value */}
+            <div className="hub-card">
+              <div className="hub-icon">🧠</div>
+              <h3>Curriculum Aligned</h3>
+              <p>Mechanics are built around real color theory, reinforcing pattern recognition, problem-solving, and primary-to-tertiary color mixing.</p>
+            </div>
+
+            {/* Card 3: Creativity */}
+            <div className="hub-card">
+              <div className="hub-icon">🎨</div>
+              <h3>Sparks Imagination</h3>
+              <p>We don't just test knowledge; we encourage children to experiment with colors and understand the artistic process through play.</p>
+            </div>
           </div>
         </div>
       </section>
