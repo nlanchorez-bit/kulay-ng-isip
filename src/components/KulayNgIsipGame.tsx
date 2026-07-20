@@ -27,10 +27,10 @@ export default function KulayNgIsipGame() {
 
   // Extract sendMessage to communicate with Unity
   const { unityProvider, isLoaded, loadingProgression, requestFullscreen, sendMessage } = useUnityContext({
-    loaderUrl: "/Build/KULAYISIP-WEBGL.loader.js",
-    dataUrl: "/Build/KULAYISIP-WEBGL.data",
-    frameworkUrl: "/Build/KULAYISIP-WEBGL.framework.js",
-    codeUrl: "/Build/KULAYISIP-WEBGL.wasm",
+    loaderUrl: "/Build/WEBGL-KULAY.loader.js",
+    dataUrl: "/Build/WEBGL-KULAY.data",
+    frameworkUrl: "/Build/WEBGL-KULAY.framework.js",
+    codeUrl: "/Build/WEBGL-KULAY.wasm",
   });
 
   // Handle Volume Change
