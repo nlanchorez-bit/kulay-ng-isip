@@ -4,24 +4,32 @@ import { useEffect, useRef, useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
-// TypeScript interface for our typed state
+// TypeScript interface updated with the new database columns
 interface ScoreEntry {
   id: number;
-  rank: number;
+  position: number;      // The player's standing on the leaderboard (1, 2, 3...)
   name: string;
   score: number;
+  gameRank: string;     // The letter grade from the database 'rank' column (e.g., S, A, B)
+  timeElapsed: number;  // The raw float seconds from 'time_elapsed'
+  maxStreak: number;    // The integer from 'max_streak'
   date: string;
   color: string;
 }
 
-// Vibrant colors for avatars, dynamically assigned based on Player ID
 const AVATAR_COLORS = [
   "var(--orange)", "var(--pink)", "var(--indigo)",
   "var(--blue-tint)", "var(--green-tint)", "var(--red-tint)", "var(--yellow)"
 ];
 
+// Helper to format raw seconds (e.g., 220.572) into "3m 40s"
+const formatTime = (seconds: number) => {
+  const m = Math.floor(seconds / 60);
+  const s = Math.floor(seconds % 60);
+  return `${m}m ${s}s`;
+};
+
 export default function LeaderboardPage() {
-  // FIX: Added <HTMLElement> so TypeScript knows what these refs point to
   const pageRef = useRef<HTMLElement>(null);
   const heroRef = useRef<HTMLElement>(null);
 
@@ -29,7 +37,6 @@ export default function LeaderboardPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
-  // Fetch data from our new API route
   useEffect(() => {
     const fetchLeaderboard = async () => {
       try {
@@ -37,22 +44,22 @@ export default function LeaderboardPage() {
         const json = await response.json();
 
         if (json.success && json.data) {
-          // Map database rows to UI format
           const formattedScores = json.data.map((item: any, index: number) => {
-            // Format timestamp to "Oct 24, 2026"
             const dateObj = new Date(item.created_at);
             const formattedDate = dateObj.toLocaleDateString("en-US", { 
               month: "short", day: "numeric", year: "numeric" 
             });
 
-            // Deterministically assign a color based on the character length of the player's ID
             const colorIndex = item.player_id.length % AVATAR_COLORS.length;
 
             return {
               id: item.id,
-              rank: index + 1, // Overall leaderboard rank based on array position
+              position: index + 1,
               name: item.player_id,
               score: item.score,
+              gameRank: item.rank || "-",
+              timeElapsed: item.time_elapsed || 0,
+              maxStreak: item.max_streak || 0,
               date: formattedDate,
               color: AVATAR_COLORS[colorIndex]
             };
@@ -70,11 +77,9 @@ export default function LeaderboardPage() {
     fetchLeaderboard();
   }, []);
 
-  // Scroll animations and scroll-to-top handler
   useEffect(() => {
     if (!pageRef.current) return;
 
-    // Scroll reveal observer
     const reveals = pageRef.current.querySelectorAll(".reveal");
     const revObs = new IntersectionObserver(
       (entries) => {
@@ -89,14 +94,11 @@ export default function LeaderboardPage() {
     );
 
     setTimeout(() => {
-      // FIX: Typed 'el' as Element
       reveals.forEach((el: Element) => revObs.observe(el));
     }, 100);
 
-    // Scroll Listener
     const handleScroll = () => {
       if (heroRef.current) {
-        // FIX: Re-added the missing * multiplication operator
         heroRef.current.style.backgroundPositionY = `${window.scrollY * 0.35}px`;
       }
       setShowScrollTop(window.scrollY > 400);
@@ -107,7 +109,7 @@ export default function LeaderboardPage() {
       window.removeEventListener("scroll", handleScroll);
       revObs.disconnect();
     };
-  }, [isLoading]); // Re-bind observer when loading finishes and new DOM nodes exist
+  }, [isLoading]); 
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -116,12 +118,10 @@ export default function LeaderboardPage() {
   const topThree = scores.slice(0, 3);
   const remainingPlayers = scores.slice(3);
 
-  // FIX: Restored the <main> wrapper and <Header />
   return (
     <main className="leaderboard-wrapper" ref={pageRef}>
       <Header />
 
-      {/* ══════════════ PAGE HERO ══════════════ */}
       <section className="leaderboard-hero" ref={heroRef}>
         <div className="leaderboard-hero-content">
           <span className="eyebrow" style={{ color: "var(--yellow)" }}>Hall of Fame</span>
@@ -130,7 +130,6 @@ export default function LeaderboardPage() {
         </div>
       </section>
 
-      {/* ══════════════ LEADERBOARD CONTENT ══════════════ */}
       <section className="leaderboard-container">
         
         {isLoading ? (
@@ -143,7 +142,7 @@ export default function LeaderboardPage() {
           </div>
         ) : (
           <>
-            {/* PODIUM (Top 3) */}
+            {/* ── PODIUM (Top 3) ── */}
             <div className="podium-section reveal">
               
               {/* Rank 2 - Silver */}
@@ -155,6 +154,11 @@ export default function LeaderboardPage() {
                   </div>
                   <h3 className="podium-name">{topThree[1].name}</h3>
                   <div className="podium-score">{topThree[1].score.toLocaleString()} pts</div>
+                  <div className="podium-stats">
+                    <span className="stat-badge">{topThree[1].gameRank} Rank</span>
+                    <span>⏱️ {formatTime(topThree[1].timeElapsed)}</span>
+                    <span>🔥 {topThree[1].maxStreak} Streak</span>
+                  </div>
                 </div>
               )}
 
@@ -168,6 +172,11 @@ export default function LeaderboardPage() {
                   </div>
                   <h3 className="podium-name">{topThree[0].name}</h3>
                   <div className="podium-score">{topThree[0].score.toLocaleString()} pts</div>
+                  <div className="podium-stats">
+                    <span className="stat-badge">{topThree[0].gameRank} Rank</span>
+                    <span>⏱️ {formatTime(topThree[0].timeElapsed)}</span>
+                    <span>🔥 {topThree[0].maxStreak} Streak</span>
+                  </div>
                 </div>
               )}
 
@@ -180,17 +189,25 @@ export default function LeaderboardPage() {
                   </div>
                   <h3 className="podium-name">{topThree[2].name}</h3>
                   <div className="podium-score">{topThree[2].score.toLocaleString()} pts</div>
+                  <div className="podium-stats">
+                    <span className="stat-badge">{topThree[2].gameRank} Rank</span>
+                    <span>⏱️ {formatTime(topThree[2].timeElapsed)}</span>
+                    <span>🔥 {topThree[2].maxStreak} Streak</span>
+                  </div>
                 </div>
               )}
 
             </div>
 
-            {/* LIST (Ranks 4+) */}
+            {/* ── LIST (Ranks 4+) ── */}
             {remainingPlayers.length > 0 && (
               <div className="leaderboard-list reveal" style={{ transitionDelay: "0.2s" }}>
                 <div className="list-header">
-                  <span className="col-rank">Rank</span>
+                  <span className="col-pos">#</span>
                   <span className="col-player">Player</span>
+                  <span className="col-stats">Rank</span>
+                  <span className="col-stats">Time</span>
+                  <span className="col-stats">Streak</span>
                   <span className="col-date">Date Achieved</span>
                   <span className="col-score">Score</span>
                 </div>
@@ -198,13 +215,16 @@ export default function LeaderboardPage() {
                 <div className="list-body">
                   {remainingPlayers.map((player) => (
                     <div key={player.id} className="list-row">
-                      <span className="col-rank">#{player.rank}</span>
+                      <span className="col-pos">{player.position}</span>
                       <span className="col-player">
                         <div className="list-avatar" style={{ background: player.color }}>
                           {player.name.charAt(0).toUpperCase()}
                         </div>
                         {player.name}
                       </span>
+                      <span className="col-stats stat-rank">{player.gameRank}</span>
+                      <span className="col-stats">{formatTime(player.timeElapsed)}</span>
+                      <span className="col-stats">{player.maxStreak}</span>
                       <span className="col-date">{player.date}</span>
                       <span className="col-score">{player.score.toLocaleString()}</span>
                     </div>
@@ -217,7 +237,6 @@ export default function LeaderboardPage() {
 
       </section>
 
-      {/* Scroll-to-top */}
       <button
         id="scrollTopBtn"
         title="Back to top"

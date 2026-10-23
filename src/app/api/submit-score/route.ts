@@ -35,7 +35,7 @@ export async function GET() {
         // Fetch top 100 runs from Supabase, ordered by highest score
         const { data, error } = await supabase
             .from('leaderboard_runs')
-            .select('id, player_id, score, created_at')
+            .select('id, player_id, score, time_elapsed, rank, max_streak, created_at')
             .order('score', { ascending: false })
             .limit(100);
 

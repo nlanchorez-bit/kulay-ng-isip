@@ -4485,22 +4485,22 @@ body {
 }
 
 .podium-card.gold {
-  height: 280px;
   background: linear-gradient(to top, rgba(234, 179, 8, 0.1), rgba(255, 255, 255, 0.05));
   border-color: rgba(234, 179, 8, 0.3);
   z-index: 3;
+  padding-bottom: 3rem;
 }
 
 .podium-card.silver {
-  height: 240px;
   background: linear-gradient(to top, rgba(148, 163, 184, 0.1), rgba(255, 255, 255, 0.03));
   border-color: rgba(148, 163, 184, 0.3);
+  padding-bottom: 2rem;
 }
 
 .podium-card.bronze {
-  height: 210px;
   background: linear-gradient(to top, rgba(217, 119, 6, 0.1), rgba(255, 255, 255, 0.03));
   border-color: rgba(217, 119, 6, 0.3);
+  padding-bottom: 1.5rem;
 }
 
 .podium-crown {
@@ -4563,6 +4563,33 @@ body {
   border-radius: 999px;
 }
 
+/* ── NEW PODIUM STATS ── */
+.podium-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: #94a3b8;
+  background: rgba(0, 0, 0, 0.15);
+  padding: 0.75rem;
+  border-radius: 0.75rem;
+  width: 100%;
+}
+
+.stat-badge {
+  color: var(--yellow);
+  font-weight: bold;
+  font-family: 'Fredoka One', cursive;
+  letter-spacing: 1px;
+}
+
+.stat-rank {
+  font-family: 'Fredoka One', cursive;
+  color: var(--pink);
+  font-size: 1.2rem;
+}
+
 /* ── LIST (RANKS 4+) ── */
 .leaderboard-list {
   background: rgba(255, 255, 255, 0.02);
@@ -4604,11 +4631,6 @@ body {
   border-bottom: none;
 }
 
-.col-rank { width: 10%; font-family: 'Fredoka One', cursive; color: #64748b; }
-.col-player { width: 45%; display: flex; align-items: center; gap: 1rem; font-weight: 700; color: #f8fafc; }
-.col-date { width: 25%; color: #64748b; font-size: 0.95rem; }
-.col-score { width: 20%; text-align: right; font-family: 'Fredoka One', cursive; color: var(--pink); font-size: 1.15rem; }
-
 .list-avatar {
   width: 36px;
   height: 36px;
@@ -4621,8 +4643,15 @@ body {
   font-size: 1rem;
 }
 
+/* ── NEW LIST COLUMNS ── */
+.col-pos { width: 5%; font-family: 'Fredoka One', cursive; color: #64748b; }
+.col-player { width: 25%; display: flex; align-items: center; gap: 1rem; font-weight: 700; color: #f8fafc; }
+.col-stats { width: 12%; color: #cbd5e1; font-size: 0.95rem; text-align: center; }
+.col-date { width: 18%; color: #64748b; font-size: 0.95rem; text-align: right; }
+.col-score { width: 16%; text-align: right; font-family: 'Fredoka One', cursive; color: var(--pink); font-size: 1.15rem; }
+
 /* ── RESPONSIVE ── */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .podium-section {
     align-items: center;
     flex-direction: column;
@@ -4632,15 +4661,18 @@ body {
   .podium-card.gold, .podium-card.silver, .podium-card.bronze {
     width: 100%;
     height: auto;
+    padding-bottom: 2rem;
   }
   
-  .gold { order: -1; } /* Keep Gold on top when stacked */
+  .gold { order: -1; } 
   .podium-crown { top: -25px; right: 20px; }
   .podium-rank { top: -15px; left: 20px; }
 
-  .col-date { display: none; }
-  .col-rank { width: 15%; }
-  .col-player { width: 55%; }
+  /* Hide less important stats on small screens to prevent squishing */
+  .col-date, .col-stats:not(.stat-rank) { display: none; }
+  .col-pos { width: 10%; }
+  .col-player { width: 45%; }
+  .col-stats.stat-rank { width: 15%; }
   .col-score { width: 30%; }
   
   .list-header, .list-row {
