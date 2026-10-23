@@ -1,14 +1,18 @@
+//src\app\api\submit-score\route.ts
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
-// Initialize Supabase client
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-// We use the SERVICE_ROLE_KEY here so the server can bypass Row Level Security (RLS) to insert data.
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || ''; 
+// 1. Force Next.js to treat this as a dynamic, runtime-only route
+export const dynamic = 'force-dynamic';
 
-const supabase = createClient(supabaseUrl, supabaseKey);
+// 2. Wrap initialization in a function so it DOES NOT execute at build time
+const getSupabaseClient = () => {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+    // Fallback to anon key if service key is missing during local tests
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''; 
+    return createClient(supabaseUrl, supabaseKey);
+};
 
-// Define TypeScript interfaces based on the Unity payload
 interface ArenaRunData {
     timeElapsed: number;
     rank: string;
@@ -26,6 +30,8 @@ interface WebPayload {
 // ==========================================
 export async function GET() {
     try {
+        const supabase = getSupabaseClient();
+        
         // Fetch top 100 runs from Supabase, ordered by highest score
         const { data, error } = await supabase
             .from('leaderboard_runs')
@@ -47,7 +53,7 @@ export async function GET() {
                 status: 200,
                 headers: {
                     'Access-Control-Allow-Origin': '*',
-                    'Cache-Control': 'no-store, max-age=0' // Prevent caching to ensure fresh scores
+                    'Cache-Control': 'no-store, max-age=0' 
                 }
             }
         );
@@ -86,6 +92,8 @@ export async function POST(request: Request) {
             rank: run.rank,
             max_streak: run.maxStreak,
         }));
+
+        const supabase = getSupabaseClient();
 
         // Insert into Supabase
         const { error } = await supabase.from('leaderboard_runs').insert(runsToInsert);
