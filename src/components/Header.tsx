@@ -37,6 +37,7 @@ export default function Header() {
           <li><Link href="/gallery" className={isActive("/gallery")}>Gallery</Link></li>
           <li><Link href="/blog" className={isActive("/blog")}>DevBlog</Link></li>
           <li><Link href="/gameplay" className={isActive("/gameplay")}>Gameplay</Link></li>
+          <li><Link href="/leaderboard" className={isActive("/leaderboard")}>Leaderboard</Link></li>
 
           <li><div className="nav-pip" /></li>
           <li><Link href="/login" className="btn-login">Game Master</Link></li>
@@ -60,6 +61,7 @@ export default function Header() {
         <Link href="/gallery" className={isActive("/gallery")}>Gallery</Link>
         <Link href="/blog" className={isActive("/blog")}>DevBlog</Link>
         <Link href="/gameplay" className={isActive("/gameplay")}>Gameplay</Link>
+        <Link href="/leaderboard" className={isActive("/leaderboard")}>Leaderboard</Link>
 
         <hr className="drawer-divider" />
         <Link href="/login" className="btn-login">Game Master Login</Link>
