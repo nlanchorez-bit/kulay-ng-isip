@@ -4420,3 +4420,230 @@ body {
   font-size: 1.05rem;
   line-height: 1.6;
 }
+
+/* ===================================================
+   LEADERBOARD PAGE
+   =================================================== */
+
+.leaderboard-wrapper {
+  background-color: var(--darker);
+  min-height: 100vh;
+  color: #f8fafc;
+  padding-bottom: 6rem;
+}
+
+.leaderboard-hero {
+  padding: 10rem 1.5rem 6rem;
+  text-align: center;
+  background: radial-gradient(circle at top, rgba(99, 102, 241, 0.15) 0%, transparent 60%);
+}
+
+.leaderboard-hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.leaderboard-hero h1 {
+  font-family: 'Fredoka One', cursive;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  margin-bottom: 1rem;
+}
+
+.leaderboard-hero p {
+  font-size: 1.15rem;
+  color: #94a3b8;
+}
+
+.leaderboard-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* ── PODIUM (TOP 3) ── */
+.podium-section {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+  padding-top: 2rem;
+}
+
+.podium-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.5rem 1.5rem 0.5rem 0.5rem;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  width: 220px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  backdrop-filter: blur(10px);
+}
+
+.podium-card.gold {
+  height: 280px;
+  background: linear-gradient(to top, rgba(234, 179, 8, 0.1), rgba(255, 255, 255, 0.05));
+  border-color: rgba(234, 179, 8, 0.3);
+  z-index: 3;
+}
+
+.podium-card.silver {
+  height: 240px;
+  background: linear-gradient(to top, rgba(148, 163, 184, 0.1), rgba(255, 255, 255, 0.03));
+  border-color: rgba(148, 163, 184, 0.3);
+}
+
+.podium-card.bronze {
+  height: 210px;
+  background: linear-gradient(to top, rgba(217, 119, 6, 0.1), rgba(255, 255, 255, 0.03));
+  border-color: rgba(217, 119, 6, 0.3);
+}
+
+.podium-crown {
+  position: absolute;
+  top: -35px;
+  font-size: 2.5rem;
+  filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+  animation: floatOrb 3s ease-in-out infinite alternate;
+}
+
+.podium-rank {
+  position: absolute;
+  top: -15px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Fredoka One', cursive;
+  font-size: 1rem;
+  color: var(--darker);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.gold .podium-rank { background: #eab308; }
+.silver .podium-rank { background: #94a3b8; }
+.bronze .podium-rank { background: #d97706; }
+
+.podium-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Fredoka One', cursive;
+  font-size: 2rem;
+  color: #fff;
+  margin-bottom: 1rem;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.podium-name {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.podium-score {
+  color: #f8fafc;
+  font-weight: 800;
+  font-size: 1.15rem;
+  background: rgba(0,0,0,0.2);
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+}
+
+/* ── LIST (RANKS 4+) ── */
+.leaderboard-list {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.list-header {
+  display: flex;
+  padding: 1.25rem 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+}
+
+.list-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.list-row {
+  display: flex;
+  padding: 1.25rem 2rem;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  transition: background 0.2s ease;
+}
+
+.list-row:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.list-row:last-child {
+  border-bottom: none;
+}
+
+.col-rank { width: 10%; font-family: 'Fredoka One', cursive; color: #64748b; }
+.col-player { width: 45%; display: flex; align-items: center; gap: 1rem; font-weight: 700; color: #f8fafc; }
+.col-date { width: 25%; color: #64748b; font-size: 0.95rem; }
+.col-score { width: 20%; text-align: right; font-family: 'Fredoka One', cursive; color: var(--pink); font-size: 1.15rem; }
+
+.list-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Fredoka One', cursive;
+  color: #fff;
+  font-size: 1rem;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .podium-section {
+    align-items: center;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .podium-card.gold, .podium-card.silver, .podium-card.bronze {
+    width: 100%;
+    height: auto;
+  }
+  
+  .gold { order: -1; } /* Keep Gold on top when stacked */
+  .podium-crown { top: -25px; right: 20px; }
+  .podium-rank { top: -15px; left: 20px; }
+
+  .col-date { display: none; }
+  .col-rank { width: 15%; }
+  .col-player { width: 55%; }
+  .col-score { width: 30%; }
+  
+  .list-header, .list-row {
+    padding: 1rem;
+  }
+}
